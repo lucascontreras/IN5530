@@ -5,4 +5,4 @@ Curso dictado en la [Facultad de Ciencias Físicas y Matemáticas](http://ingeni
 
 Esta documentación busca guiar a los estudiantes del curso a lo largo del mismo, enfocándose principalmente en las herramientas de D3 utilizadas.
 
-[Ir a la documentación](//wiki)
+[Ir a la documentación](https://github.com/lucascontreras/IN5530/wiki)
