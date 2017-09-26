@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## IN5530 - Taller de Visualización de Datos
 
 You can use the [editor on GitHub](https://github.com/lucascontreras/IN5530/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
