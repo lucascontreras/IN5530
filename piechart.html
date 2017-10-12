@@ -44,10 +44,10 @@
 			     	.data(pieChart).enter()
 			    		.append("path")
 			    		.attr("d", d3.arc()
-			    						.outerRadius(function(d, i) {
-			    							return 200;
-			    						})
-			    						.innerRadius(10)
+			    			.outerRadius(function(d, i) {
+			    				return 200;
+			    			})
+			    			.innerRadius(10)
 			    		)
 			    		.style("fill", function(d, i) {return colorScale(i)})
 			    		.style("opacity", .5)
