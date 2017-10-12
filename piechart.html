@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>D3.js - PieChart</title>
+	<meta charset="utf-8"/>
+	<script src="d3.v4.min.js"></script>
+	<style type="text/css">
+		svg {
+			border: 1px solid gray;
+		}
+	</style>
+</head>
+<body>
+	<div id="viz">
+		<svg id="piechart" width="600" height="600"></svg>
+	</div>
+	<script type="text/javascript">
+		
+		d3.csv("worddata.csv", function(data) {
+			console.log("Data: ");
+	    	console.log(data);
+			dataViz_piechart(data);
+			
+		});
+
+	    function dataViz_piechart(data) {
+	    	var frecuencias=[];
+	    	data.forEach(function(element) {
+		 		frecuencias.push(element.frequency);
+		 	});
+
+	    	console.log("Colores");
+	    	var colorScale = d3.scaleOrdinal(d3.schemeCategory20c);
+	    	console.log(d3.schemeCategory20c);
+	      
+	      	console.log("PieChart");
+	      	pieChart = d3.pie()(frecuencias);
+	      	console.log(pieChart);
+
+	      	d3.select("#piechart")
+			    .append("g")
+			     	.attr("transform","translate(300,300)")
+			     	.selectAll("path")
+			     	.data(pieChart).enter()
+			    		.append("path")
+			    		.attr("d", d3.arc()
+			    						.outerRadius(function(d, i) {
+			    							return 200;
+			    						})
+			    						.innerRadius(10)
+			    		)
+			    		.style("fill", function(d, i) {return colorScale(i)})
+			    		.style("opacity", .5)
+			    		.style("stroke", "black")
+			    		.style("stroke-width", "2px");
+	      
+	    }
+	</script>
+</body>
+</html>
