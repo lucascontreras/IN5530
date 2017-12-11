@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>D3.js -WordCloud</title>
+	<meta charset="utf-8"/>
+	<script src="d3.v4.min.js"></script>
+	<!-- https://github.com/jasondavies/d3-cloud -->
+	<script src="d3.layout.cloud.js"></script>
+	<style type="text/css">
+		svg {
+			border: 1px solid gray;
+		}
+	</style>
+</head>
+<body>
+	<div id="viz">
+		<svg id="cloud" width="600" height="600"></svg>
+	</div>
+	<script type="text/javascript">
+		
+		d3.csv("worddata.csv", function(data) {
+			//tiene dos columnas, una con la palabras y la otra con la frecuencia
+			console.log("Data: ",data);
+
+			dataViz_wordcloud(data);
+			
+		});
+
+		function dataViz_wordcloud(data) {
+			//creamos una escala para las fuentes y frecuencias
+			wordScale=d3.scaleLinear();//usamos la escala para "normalizar" los tamaños
+
+			var keywords = ["layout", "zoom", "circle", "style", "append", "attr"]
+
+			//le pasamos la data en words
+			//le asignamos un nuevo campo size
+			//draw tendrá asignado data
+			d3.layout.cloud().size([600, 600])
+				.words(data)
+				.rotate(function(d) { return d.text.length > 5 ? 0 : 85; })
+				.fontSize(function(d) { return wordScale(d.frequency); })
+				.on("end", draw)
+				.start();
+
+			//funcion que dibuja
+			function draw(words) {
+				console.log("Words:",words);
+
+				
+				var wordG = d3.select("#cloud")//seleccionamos el svg cloud 
+								.append("g")
+									.attr("id", "wordCloudG")
+									.attr("transform","translate(300,300)");
+
+				//agregamos cada palabra
+				wordG.selectAll("text")
+					.data(words).enter()
+						.append("text")
+							.style("font-size", function(d) {
+								//console.log(d);  
+								return d.size + "px";
+								//return parseInt(d.frequency) + "px";
+							})
+
+							.style("opacity", .75)
+							.attr("text-anchor", "middle")
+							.attr("transform", function(d) {
+								return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+							})
+							//.attr("transform", function(d) {
+							//	return d.text.length > 5 ? "translate(" + [d.x, d.y] + ")rotate(" + 0 + ")" : "translate(" + [d.x, d.y] + ")rotate(" + 90 + ")";;
+							//})
+							.text(function(d) { return d.text; });
+			}
+
+		}
+	</script>
+</body>
+</html>
